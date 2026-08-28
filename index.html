@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#fafaf8" />
+
+    <title>MD Irfanul Hoque Taseen | Portfolio</title>
+    <meta
+      name="description"
+      content="MD Irfanul Hoque Taseen — CSE student and aspiring AI software engineer in Dhaka, Bangladesh. Building software, exploring AI, and turning ideas into real-world projects."
+    />
+    <meta name="author" content="MD Irfanul Hoque Taseen" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Open Graph / social preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="MD Irfanul Hoque Taseen | Portfolio" />
+    <meta
+      property="og:description"
+      content="CSE student and aspiring AI software engineer. Building software, exploring AI, and turning ideas into real-world projects."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Typefaces: Clash Display (headings) + Inter (body) + JetBrains Mono (system readout) -->
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&amp;display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+    />
+
+    <style>
+      html {
+        background-color: #fafaf8;
+      }
+      /* Paint the shell before React hydrates so there is never a flash. */
+      #boot {
+        position: fixed;
+        inset: 0;
+        background: #fafaf8;
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="boot"></div>
+    <noscript>
+      <div
+        style="
+          font-family: system-ui, sans-serif;
+          color: #10201a;
+          background: #fafaf8;
+          padding: 48px;
+          line-height: 1.6;
+        "
+      >
+        <h1 style="color: #0a7a4f">MD Irfanul Hoque Taseen</h1>
+        <p>CSE Student &amp; Aspiring AI Software Engineer — Dhaka, Bangladesh</p>
+        <p>
+          This portfolio needs JavaScript enabled. Reach me at
+          <a style="color: #0a7a4f" href="mailto:irfanul.tae@gmail.com">irfanul.tae@gmail.com</a>
+          or on
+          <a style="color: #0a7a4f" href="https://github.com/irfanulhoquetaseen">GitHub</a>.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

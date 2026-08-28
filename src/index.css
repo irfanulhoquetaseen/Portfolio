@@ -1,0 +1,392 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   DESIGN TOKENS
+   The palette is a single deep-green substrate plus one signal
+   colour. Everything else is opacity of those two.
+   ============================================================ */
+:root {
+  --void: #fafaf8;
+  --abyss: #f2f6f3;
+  --moss: #e5ede7;
+  --signal: #0a7a4f;
+  --signal-2: #0d9c5e;
+  --bone: #10201a;
+  --haze: #476156;
+
+  --edge: rgba(10, 122, 79, 0.15);
+  --edge-strong: rgba(10, 122, 79, 0.35);
+
+  --shell: 1440px;
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: auto; /* Lenis owns scrolling */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-void font-sans text-bone antialiased;
+    margin: 0;
+    overflow-x: hidden;
+    font-feature-settings: 'cv11', 'ss01';
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(10, 122, 79, 0.16);
+    color: #085e3c;
+  }
+
+  /* Visible, on-brand keyboard focus everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Headings inherit the display face by default. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-semibold;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Scrollbar — thin, green, unobtrusive. */
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f2f6f3;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(10, 122, 79, 0.22);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(10, 122, 79, 0.4);
+  }
+}
+
+/* ============================================================
+   LENIS (required by the smooth-scroll engine)
+   ============================================================ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Hide the native cursor only while the custom cursor is live. */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* ============================================================
+   COMPONENT LAYER
+   ============================================================ */
+@layer components {
+  /* Page shell — one container, used by every section so the
+     left edge of every header, nav item and footer link aligns. */
+  .shell {
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section-pad {
+    padding-top: clamp(5rem, 11vw, 10rem);
+    padding-bottom: clamp(5rem, 11vw, 10rem);
+  }
+
+  /* Glass surface: light translucent glass with subtle border & soft shadow. */
+  .glass {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid var(--edge);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      0 12px 36px -16px rgba(10, 32, 26, 0.08);
+  }
+
+  .glass-hover {
+    transition:
+      border-color 0.5s var(--ease-expo),
+      box-shadow 0.5s var(--ease-expo),
+      transform 0.5s var(--ease-expo);
+  }
+  .glass-hover:hover {
+    border-color: var(--edge-strong);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+      0 0 0 1px rgba(10, 122, 79, 0.12),
+      0 24px 50px -24px rgba(10, 122, 79, 0.2);
+  }
+
+  /* Monospace eyebrow used as the section index / readout. */
+  .readout {
+    @apply font-mono text-2xs uppercase;
+    letter-spacing: 0.24em;
+    color: var(--haze);
+  }
+
+  .chip {
+    @apply inline-block font-mono text-2xs uppercase;
+    letter-spacing: 0.14em;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid var(--edge);
+    color: #1e4a36;
+    background: rgba(10, 122, 79, 0.06);
+    white-space: nowrap;
+  }
+
+  /* Hairline rule that can be animated from 0 → full width. */
+  .rule {
+    height: 1px;
+    background: linear-gradient(to right, var(--edge-strong), rgba(10, 122, 79, 0));
+  }
+}
+
+/* ============================================================
+   UTILITY LAYER
+   ============================================================ */
+@layer utilities {
+  .text-signal-grad {
+    background: linear-gradient(96deg, #0a7a4f 0%, #0d9c5e 50%, #086843 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .glow-text {
+    filter: drop-shadow(0 2px 8px rgba(10, 122, 79, 0.2));
+  }
+
+  /* Fine engineering grid — the ambient texture of the whole page. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(10, 122, 79, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 122, 79, 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .bg-grid-fine {
+    background-image:
+      linear-gradient(to right, rgba(10, 122, 79, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 122, 79, 0.045) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  /* Film grain so the flat surfaces have subtle texture. */
+  .bg-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  /* Clip window for line-by-line text reveals. */
+  .line-clip {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+  }
+
+  .fluid-display {
+    font-size: clamp(2.6rem, 8.4vw, 8rem);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+  }
+
+  .fluid-h2 {
+    font-size: clamp(1.9rem, 4.6vw, 3.75rem);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
+  }
+
+  .fluid-h3 {
+    font-size: clamp(1.25rem, 2.1vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .measure {
+    max-width: 62ch;
+  }
+
+  .will-anim {
+    will-change: transform, opacity;
+  }
+
+  .gpu {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ============================================================
+   PROJECT MOTIFS
+   Each project card carries a generated diagram of what the
+   project actually does. These rules animate it on card hover.
+   ============================================================ */
+.motif-dash {
+  stroke-dasharray: 6 8;
+}
+.group:hover .motif-dash {
+  animation: motifDash 1.9s linear infinite;
+}
+@keyframes motifDash {
+  to {
+    stroke-dashoffset: -140;
+  }
+}
+
+.motif-packet {
+  opacity: 0;
+}
+.group:hover .motif-packet {
+  animation: motifPacket 2s ease-in-out infinite;
+}
+@keyframes motifPacket {
+  0% {
+    transform: translate(0px, 0px);
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0px, 116px);
+    opacity: 0;
+  }
+}
+
+.motif-pulse {
+  opacity: 0.2;
+}
+.group:hover .motif-pulse {
+  animation: motifPulse 2.5s ease-in-out infinite;
+}
+@keyframes motifPulse {
+  0%,
+  100% {
+    opacity: 0.16;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Scanline that sweeps a project card on hover. */
+.scanline {
+  transform: translateY(-110%);
+  transition: transform 0s;
+}
+.group:hover .scanline {
+  animation: scanSweep 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes scanSweep {
+  0% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(340%);
+    opacity: 0;
+  }
+}
+
+/* Hero scroll cue: a signal travelling down the hairline. */
+@keyframes scrollCue {
+  0% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(260%);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   Every JS-driven animation is also gated in code; this is the
+   belt-and-braces layer for pure-CSS motion.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: auto !important;
+  }
+}
